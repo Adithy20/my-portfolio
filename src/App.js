@@ -11,7 +11,7 @@ import Home from './components/Home';
 import Projects from './components/Projects';
 import ProjectSDM from './components/ProjectSDM';
 import Contact from './components/Contact';
-import MobileLanding from './components/MobileLanding';
+// Removed MobileLanding to keep same view on mobile and desktop
 
 function App() {
   const [activeSection, setActiveSection] = React.useState('home');
@@ -69,14 +69,14 @@ function App() {
     <ThemeProvider theme={appTheme}>
       <CssBaseline />
       <div className="App" style={{ display: 'flex', backgroundColor: appTheme.palette.background.default }}>
-        {!mobileOpen && !isMobile && (
+        {!mobileOpen && (
           <IconButton
             aria-label="open drawer"
             edge="start"
             onClick={handleDrawerToggle}
             sx={{ 
               position: 'fixed',
-              top: 16,
+              top: 10,
               left: 16,
               zIndex: 1300,
               p: 0.5,
@@ -87,56 +87,47 @@ function App() {
             <MenuIcon sx={{ color: '#ffffff', filter: 'drop-shadow(0 1px 1px rgba(0,0,0,0.7))' }} />
           </IconButton>
         )}
-
-        {!isMobile && (
-          <Drawer
-            onSelect={(id) => scrollToSection(id)}
-            activeSection={activeSection}
-            profile={{ name: 'Adithya Gowda S', role: 'Frontend Developer', avatarUrl: '/adii.jpg' }}
-            width={320}
-            mobileOpen={mobileOpen}
-            onClose={handleDrawerToggle}
-            isMobile={isMobile}
-          />
-        )}
+        <Drawer
+          onSelect={(id) => scrollToSection(id)}
+          activeSection={activeSection}
+          profile={{ name: 'Adithya Gowda S', role: 'Frontend Developer', avatarUrl: '/adii.jpg' }}
+          width={320}
+          mobileOpen={mobileOpen}
+          onClose={handleDrawerToggle}
+          isMobile={isMobile}
+        />
         
         <div style={{ 
           flex: 1, 
-          marginLeft: !isMobile && mobileOpen ? 320 : 0,
+          marginLeft: 0,
           transition: 'margin-left 0.3s ease-in-out',
-          paddingTop: 80
+          paddingTop: 64
         }}>
-          {isMobile ? (
-            <MobileLanding />
-          ) : (
-            <>
-              <div data-section="home">
-                <Home />
-              </div>
+          <div data-section="home">
+            <Home />
+          </div>
 
-              <div data-section="about">
-                <About
-                  name="Adithya Gowda S"
-                  role="Frontend Developer"
-                  onContact={() => scrollToSection('contact')}
-                  onDownloadResume={() => console.log('Download resume clicked')}
-                />
-              </div>
+          <div data-section="about">
+            <About
+              name="Adithya Gowda S"
+              role="Frontend Developer"
+              onContact={() => scrollToSection('contact')}
+              onDownloadResume={() => console.log('Download resume clicked')}
+            />
+          </div>
 
-              <div data-section="projects">
-                <Projects />
-                <ProjectSDM />
-              </div>
+          <div data-section="projects">
+            <Projects />
+            <ProjectSDM />
+          </div>
 
-              <div data-section="contact">
-                <Contact
-                  onPhone={() => (window.location.href = 'tel:+91 9880339147')}
-                  onEmail={() => (window.location.href = 'mailto:shreyasbb20@gmail.com')}
-                  onLinkedIn={() => window.open('https://www.linkedin.com/in/Adithya Gowda S-p-2247aa374', '_blank', 'noopener,noreferrer')}
-                />
-              </div>
-            </>
-          )}
+          <div data-section="contact">
+            <Contact
+              onPhone={() => (window.location.href = 'tel:+91 9880339147')}
+              onEmail={() => (window.location.href = 'mailto:shreyasbb20@gmail.com')}
+              onLinkedIn={() => window.open('https://www.linkedin.com/in/Adithya Gowda S-p-2247aa374', '_blank', 'noopener,noreferrer')}
+            />
+          </div>
         </div>
       </div>
     </ThemeProvider>

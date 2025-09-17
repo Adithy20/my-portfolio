@@ -39,7 +39,7 @@ export default function Drawer({
     { id: 'contact', label: 'Contact', icon: <ContactSupportIcon /> },
   ],
   socials = [
-    { id: 'github', icon: <GitHubIcon />, href: 'https://github.com/Adithya-Gowda-S2004' },
+    { id: 'github', icon: <GitHubIcon />, href: 'https://github.com/Adithy20/my-portfolio' },
     { id: 'linkedin', icon: <LinkedInIcon />, href: 'https://www.linkedin.com/in/Adithya-Gowda-S2004' },
     { id: 'email', icon: <MailOutlineIcon />, href: 'mailto:aadithyagowda20@gmail.com' },
   ],
@@ -71,25 +71,24 @@ export default function Drawer({
 
   return (
     <Box sx={{ 
-      width: isMobile ? '100%' : width, 
-      height: '100vh', 
-      borderRight: isMobile ? 0 : 1, 
+      width: '100%', 
+      height: 'auto', 
+      borderBottom: 1, 
       borderColor: 'divider', 
       bgcolor: 'background.paper',
       color: 'text.primary',
       position: 'fixed',
       top: 0,
-      left: isMobile ? (mobileOpen ? 0 : '-100%') : (mobileOpen ? 0 : '-100%'),
+      left: 0,
       zIndex: 1200,
       overflow: 'hidden',
-      transition: 'left 0.3s ease-in-out',
-      boxShadow: isMobile ? 3 : 0
-    }} aria-label="Primary navigation" aria-expanded={mobileOpen}>
-      <Box sx={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
+      boxShadow: 3
+    }} aria-label="Primary navigation" aria-expanded>
+      <Box sx={{ display: 'flex', flexDirection: 'column', maxHeight: { xs: '64px', sm: '80vh' } }}>
         {/* Header */}
         <Box
           sx={{
-            display: 'flex',
+            display: { xs: 'none', sm: 'flex' },
             alignItems: 'center',
             gap: 2,
             px: 2,
@@ -132,10 +131,10 @@ export default function Drawer({
         <Divider />
 
         {/* Navigation */}
-        <Box component="nav" role="navigation" aria-label="Sections" sx={{ flex: 1, overflowY: 'auto' }}>
-          <List sx={{ py: 0 }}>
+        <Box component="nav" role="navigation" aria-label="Sections" sx={{ width: '100%', overflowX: 'auto' }}>
+          <List sx={{ py: { xs: 0.5, sm: 0 }, px: { xs: 0.5, sm: 0 }, display: 'flex', flexDirection: 'row', flexWrap: 'nowrap', alignItems: 'center' }}>
             {links.map((item, index) => (
-              <ListItem key={item.id} disablePadding>
+              <ListItem key={item.id} disablePadding sx={{ width: 'auto' }}>
                 <ListItemButton 
                   onClick={handleSelect(item.id)}
                   ref={index === 0 ? firstItemRef : undefined}
@@ -147,13 +146,16 @@ export default function Drawer({
                     },
                     transition: 'all 0.3s ease',
                     borderRadius: 1,
-                    mx: 1,
-                    mb: 0.5
+                    mx: { xs: 0.5, sm: 1 },
+                    my: 0.5,
+                    px: { xs: 1, sm: 1.5 },
+                    minHeight: 40
                   }}
                 >
                   {item.icon ? (
                     <ListItemIcon sx={{ 
-                      color: activeSection === item.id ? '#fff' : 'text.secondary' 
+                      color: activeSection === item.id ? '#fff' : 'text.secondary',
+                      display: { xs: 'none', sm: 'flex' }
                     }}>
                       {item.icon}
                     </ListItemIcon>
@@ -163,7 +165,8 @@ export default function Drawer({
                     primaryTypographyProps={{ 
                       sx: { 
                         color: activeSection === item.id ? '#fff' : 'text.primary', 
-                        fontWeight: activeSection === item.id ? 700 : 500 
+                        fontWeight: activeSection === item.id ? 700 : 500,
+                        whiteSpace: 'nowrap'
                       } 
                     }}
                   />
@@ -172,11 +175,10 @@ export default function Drawer({
             ))}
           </List>
         </Box>
-
         <Divider />
 
         {/* Footer / Socials */}
-        <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', px: 2, py: 1.5 }}>
+        <Box sx={{ display: { xs: 'none', sm: 'flex' }, alignItems: 'center', justifyContent: 'space-between', px: 2, py: 1.25 }}>
           <Typography variant="caption" color="text.secondary">
             © {new Date().getFullYear()} {profile.name}
           </Typography>
