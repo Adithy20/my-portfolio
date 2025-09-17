@@ -11,6 +11,7 @@ import Home from './components/Home';
 import Projects from './components/Projects';
 import ProjectSDM from './components/ProjectSDM';
 import Contact from './components/Contact';
+import MobileLanding from './components/MobileLanding';
 
 function App() {
   const [activeSection, setActiveSection] = React.useState('home');
@@ -68,7 +69,7 @@ function App() {
     <ThemeProvider theme={appTheme}>
       <CssBaseline />
       <div className="App" style={{ display: 'flex', backgroundColor: appTheme.palette.background.default }}>
-        {!mobileOpen && (
+        {!mobileOpen && !isMobile && (
           <IconButton
             aria-label="open drawer"
             edge="start"
@@ -87,47 +88,55 @@ function App() {
           </IconButton>
         )}
 
-        <Drawer
-          onSelect={(id) => scrollToSection(id)}
-          activeSection={activeSection}
-          profile={{ name: 'Adithya Gowda S', role: 'Frontend Developer', avatarUrl: '/adii.jpg' }}
-          width={320}
-          mobileOpen={mobileOpen}
-          onClose={handleDrawerToggle}
-          isMobile={isMobile}
-        />
+        {!isMobile && (
+          <Drawer
+            onSelect={(id) => scrollToSection(id)}
+            activeSection={activeSection}
+            profile={{ name: 'Adithya Gowda S', role: 'Frontend Developer', avatarUrl: '/adii.jpg' }}
+            width={320}
+            mobileOpen={mobileOpen}
+            onClose={handleDrawerToggle}
+            isMobile={isMobile}
+          />
+        )}
         
         <div style={{ 
           flex: 1, 
-          marginLeft: mobileOpen ? 320 : 0,
+          marginLeft: !isMobile && mobileOpen ? 320 : 0,
           transition: 'margin-left 0.3s ease-in-out',
           paddingTop: 80
         }}>
-          <div data-section="home">
-            <Home />
-          </div>
+          {isMobile ? (
+            <MobileLanding />
+          ) : (
+            <>
+              <div data-section="home">
+                <Home />
+              </div>
 
-          <div data-section="about">
-            <About
-              name="Adithya Gowda S"
-              role="Frontend Developer"
-              onContact={() => scrollToSection('contact')}
-              onDownloadResume={() => console.log('Download resume clicked')}
-            />
-          </div>
+              <div data-section="about">
+                <About
+                  name="Adithya Gowda S"
+                  role="Frontend Developer"
+                  onContact={() => scrollToSection('contact')}
+                  onDownloadResume={() => console.log('Download resume clicked')}
+                />
+              </div>
 
-          <div data-section="projects">
-            <Projects />
-            <ProjectSDM />
-          </div>
+              <div data-section="projects">
+                <Projects />
+                <ProjectSDM />
+              </div>
 
-          <div data-section="contact">
-            <Contact
-              onPhone={() => (window.location.href = 'tel:+91 9880339147')}
-              onEmail={() => (window.location.href = 'mailto:shreyasbb20@gmail.com')}
-              onLinkedIn={() => window.open('https://www.linkedin.com/in/Adithya Gowda S-p-2247aa374', '_blank', 'noopener,noreferrer')}
-            />
-          </div>
+              <div data-section="contact">
+                <Contact
+                  onPhone={() => (window.location.href = 'tel:+91 9880339147')}
+                  onEmail={() => (window.location.href = 'mailto:shreyasbb20@gmail.com')}
+                  onLinkedIn={() => window.open('https://www.linkedin.com/in/Adithya Gowda S-p-2247aa374', '_blank', 'noopener,noreferrer')}
+                />
+              </div>
+            </>
+          )}
         </div>
       </div>
     </ThemeProvider>
